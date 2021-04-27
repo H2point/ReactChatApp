@@ -1,11 +1,15 @@
 import { Ionicons } from '@expo/vector-icons';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs';
+
 import { createStackNavigator } from '@react-navigation/stack';
 import * as React from 'react';
+import { BorderlessButton } from 'react-native-gesture-handler';
+
 
 import Colors from '../constants/Colors';
 import useColorScheme from '../hooks/useColorScheme';
-import TabOneScreen from '../screens/TabOneScreen';
+import ChatsScreen from '../screens/ChatsScreen';
 import TabTwoScreen from '../screens/TabTwoScreen';
 import { BottomTabParamList, TabOneParamList, TabTwoParamList } from '../types';
 
@@ -16,17 +20,36 @@ export default function BottomTabNavigator() {
 
   return (
     <BottomTab.Navigator
-      initialRouteName="TabOne"
-      tabBarOptions={{ activeTintColor: Colors[colorScheme].tint }}>
+      initialRouteName="Chats"
+      tabBarOptions={{ 
+        activeTintColor: Colors[colorScheme].background,
+        style:{
+          backgroundColor:Colors[colorScheme].tint,
+          
+        }
+        }}>
       <BottomTab.Screen
-        name="TabOne"
+        name="Camera"
         component={TabOneNavigator}
+        options={{
+          tabBarIcon: ({ color }) => <Ionicons name="ios-camera-reverse-outline" size={30} color="white" />,
+          tabBarLabel:() => null
+        }}
+      />
+      <BottomTab.Screen
+        name="Chats"
+        component={ChatsScreen}
+       
+      />
+      <BottomTab.Screen
+        name="Status"
+        component={TabTwoNavigator}
         options={{
           tabBarIcon: ({ color }) => <TabBarIcon name="ios-code" color={color} />,
         }}
       />
       <BottomTab.Screen
-        name="TabTwo"
+        name="Calls"
         component={TabTwoNavigator}
         options={{
           tabBarIcon: ({ color }) => <TabBarIcon name="ios-code" color={color} />,
@@ -51,7 +74,7 @@ function TabOneNavigator() {
     <TabOneStack.Navigator>
       <TabOneStack.Screen
         name="TabOneScreen"
-        component={TabOneScreen}
+        component={ChatsScreen}
         options={{ headerTitle: 'Tab One Title' }}
       />
     </TabOneStack.Navigator>

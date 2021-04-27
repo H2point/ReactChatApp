@@ -2,11 +2,16 @@ import { NavigationContainer, DefaultTheme, DarkTheme } from '@react-navigation/
 import { createStackNavigator } from '@react-navigation/stack';
 import * as React from 'react';
 import { ColorSchemeName } from 'react-native';
+import Colors from '../constants/Colors';
+
+import { Ionicons } from '@expo/vector-icons';
+import { MaterialCommunityIcons } from '@expo/vector-icons';
 
 import NotFoundScreen from '../screens/NotFoundScreen';
 import { RootStackParamList } from '../types';
-import BottomTabNavigator from './BottomTabNavigator';
 import LinkingConfiguration from './LinkingConfiguration';
+import { View } from '../components/Themed';
+import BottomTabNavigator from './BottomTabNavigator';
 
 // If you are not familiar with React Navigation, we recommend going through the
 // "Fundamentals" guide: https://reactnavigation.org/docs/getting-started
@@ -26,8 +31,21 @@ const Stack = createStackNavigator<RootStackParamList>();
 
 function RootNavigator() {
   return (
-    <Stack.Navigator screenOptions={{ headerShown: false }}>
-      <Stack.Screen name="Root" component={BottomTabNavigator} />
+    <Stack.Navigator
+     screenOptions={{ 
+       headerStyle:{
+         backgroundColor:Colors.light.tint,
+       }
+     }}>
+      <Stack.Screen name="Root" 
+      component={BottomTabNavigator}
+      options={{
+        title:"Chatty",
+        headerRight:() => <View style={{flexDirection:'row',marginRight:10, width:80 , justifyContent:'space-around'}}>
+          <Ionicons name="search" size={24} color="black" />
+          <MaterialCommunityIcons name="dots-vertical" size={24} color="black" />
+        </View>
+      }} />
       <Stack.Screen name="NotFound" component={NotFoundScreen} options={{ title: 'Oops!' }} />
     </Stack.Navigator>
   );
